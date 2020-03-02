@@ -5,7 +5,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-const marker = L.marker([0, 0]).addTo(map);
+const violetIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const marker = L.marker([0, 0] , {icon:violetIcon}).addTo(map);
 
 if ('geolocation' in navigator) {
     console.log('geolocation available');
@@ -13,13 +22,20 @@ if ('geolocation' in navigator) {
     lat = position.coords.latitude;
     lon = position.coords.longitude;
     console.log(lat, lon);
-    map.setView([lat, lon], 16);
+    map.setView([lat, lon], 13);
     marker.setLatLng([lat,lon]).bindPopup(
-        `<h3>你的位置</h3>`);
+        `<h3>你的位置</h3>`)
+        .openPopup();
     });
 } else {
     console.log('geolocation not available');
 }
+
+
+let geoBtn = document.getElementById('jsGeoBtn');
+geoBtn.addEventListener('click',function(){
+    map.setView([lat, lon], 13);
+},false);
 
 let mask;
 
@@ -33,15 +49,6 @@ const greenIcon = new L.Icon({
 });
 const redIcon = new L.Icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
-
-const violetIcon = new L.Icon({
-    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
