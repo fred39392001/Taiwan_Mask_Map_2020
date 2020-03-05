@@ -16,14 +16,15 @@ const violetIcon = new L.Icon({
 
 const marker = L.marker([0, 0] , {icon:violetIcon}).addTo(map);
 
+//定位使用者位置
 if ('geolocation' in navigator) {
     console.log('geolocation available');
     navigator.geolocation.getCurrentPosition(position => {
-    lat = position.coords.latitude;
-    lon = position.coords.longitude;
-    console.log(lat, lon);
-    map.setView([lat, lon], 13);
-    marker.setLatLng([lat,lon]).bindPopup(
+    userLat = position.coords.latitude;
+    userLng = position.coords.longitude;
+    console.log(userLat, userLng);
+    map.setView([userLat, userLng], 13);
+    marker.setLatLng([userLat,userLng]).bindPopup(
         `<h3>你的位置</h3>`)
         .openPopup();
     });
@@ -31,12 +32,13 @@ if ('geolocation' in navigator) {
     console.log('geolocation not available');
 }
 
-
+//新增定位按鈕
 let geoBtn = document.getElementById('jsGeoBtn');
 geoBtn.addEventListener('click',function(){
-    map.setView([lat, lon], 13);
+    map.setView([userLat, userLng], 13);
 },false);
 
+//定義marker顏色
 let mask;
 
 const greenIcon = new L.Icon({
@@ -56,8 +58,10 @@ const redIcon = new L.Icon({
     shadowSize: [41, 41]
 });
 
+//將marker群組套件載入
 const markers = new L.MarkerClusterGroup().addTo(map);
 
+//倒入全國藥局資料並標上marker
 const xhr = new XMLHttpRequest();
 xhr.open('get','https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json');
 xhr.send();
@@ -79,6 +83,11 @@ xhr.onload = function(){
         `<h1>${pharmacyName}</h1>
         <p>成人口罩數量${maskAdult}</p>
         <p>兒童口罩數量${maskChild}</p>`));
+
+        let str = pharmacyName;
+        console.log(str);
     }
     map.addLayer(markers);
 }
+
+data = JSON.parse(xhr.responseText).features;

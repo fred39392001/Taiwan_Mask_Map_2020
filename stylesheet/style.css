@@ -1,11 +1,34 @@
 html,body{
     width: 100%;
-    height: 100%;
+	height: 100%;
+}
+
+.container{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction:row-reverse;
+}
+
+.pharmacyList{
+	width: 20%;
+	height: 100%;
+	background-color: gray;
 }
 
 #map{
-    width: 100%;
-    height: 100%;}
+    width: 80%;
+	height: 100%;
+	position: relative;
+}
+
+.GeoBtn{
+	width: 50px;
+	position: absolute;
+	top: 80px;
+	left: 21%;
+	z-index: 999;
+}
 
     .marker-cluster-small {
 		background-color: rgba(181, 226, 140, 0.6);
