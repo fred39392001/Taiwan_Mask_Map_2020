@@ -38,6 +38,7 @@ geoBtn.addEventListener('click',function(){
     map.setView([userLat, userLng], 13);
 },false);
 
+
 //定義marker顏色
 let mask;
 
@@ -58,15 +59,31 @@ const redIcon = new L.Icon({
     shadowSize: [41, 41]
 });
 
+//取出全國藥局JSON資料至全域變數
+let data;
+
+function getData(){
+    const xhr = new XMLHttpRequest;
+    xhr.open('get','https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json',true)
+    xhr.send(null);
+    xhr.onload = function(){
+        data = JSON.parse(xhr.responseText).features;
+        addMarker();
+        renderList('南投縣');
+    }
+}
+
+function init(){
+    getData();
+}
+
+init();
+
 //將marker群組套件載入
 const markers = new L.MarkerClusterGroup().addTo(map);
 
 //倒入全國藥局資料並標上marker
-const xhr = new XMLHttpRequest();
-xhr.open('get','https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json');
-xhr.send();
-xhr.onload = function(){
-    const data = JSON.parse(xhr.responseText).features;
+function addMarker(){
     for(let i = 0;i<data.length;i++){
         const pharmacyName = data[i].properties.name;
         const maskAdult = data[i].properties.mask_adult;
@@ -80,14 +97,31 @@ xhr.onload = function(){
             mask = greenIcon;
         }
         markers.addLayer(L.marker([lat,lng], {icon: mask}).bindPopup(
-        `<h1>${pharmacyName}</h1>
-        <p>成人口罩數量${maskAdult}</p>
-        <p>兒童口罩數量${maskChild}</p>`));
-
-        let str = pharmacyName;
-        console.log(str);
+            `<p style="text-align:center; font-weight:bold; font-size:1.5em; margin:15px 0;">${pharmacyName}</p>
+            <div style="display:flex; justify-content:center;">
+            <span style="color:white; background-color:#73C0D8; border-radius:10px; padding:10px; width:100px; margin-right:5%; text-align:center; font-size:12pt;">成人:${maskAdult}</span>
+            <span style="color:white; background-color:#73C0D8; border-radius:10px; padding:10px;width:100px;text-align:center;font-size:12pt;">兒童:${maskChild}</span>
+            </div>`
+        ));
     }
     map.addLayer(markers);
 }
 
-data = JSON.parse(xhr.responseText).features;
+//在左邊欄印出藥局名稱
+function renderList(county){
+    let str = '';
+    for(let i = 0;i<data.length;i++){
+        const countyName = data[i].properties.county;
+        const pharmacyName = data[i].properties.name;
+        const maskAdult = data[i].properties.mask_adult;
+        const maskChild = data[i].properties.mask_child;
+        if(countyName == county){
+            str+=`<ul>
+            <li>${pharmacyName}</li>
+            <span class="gray">成人口罩數量${maskAdult}</span>
+            <span>兒童口罩數量${maskChild}</span>
+            </ul>`
+        }
+    }
+        document.querySelector('.pharmacyList').innerHTML = str;
+}
