@@ -62,18 +62,49 @@ html,body{
 }
 
 .panel{
-	width: 20%;
+	width: 25%;
 	height: 100%;
 }
 
 .dateInfo{
 	height: 20%;
-	background-color:gray ;
+	background-color:#73C0D8 ;
+	display: flex;
+	justify-content: center;
 }
 
+.idNumOdd, .idNumEven, .idNumAll{
+	color: white;
+	font-size: 8pt;
+	text-align: justify;
+	display: none;
+}
+
+.idNumOdd span, .idNumEven span{
+	color: #FFF126;
+	font-size: 16pt;
+	font-weight: 900;
+}
+
+.idNumAll span{
+	color: #FFF126;
+	font-size: 13pt;
+	font-weight: 900;
+}
 .pharmacyList{
-	height: 80%;
+	height: 75%;
 	overflow:auto;
+}
+
+.pharmacyList ul{
+	padding:10px 0 8px 0;
+	display: flex;
+	justify-content: center;
+}
+
+
+.panelMaskNum{
+	padding: 20px 0 10px 0; 
 }
 
 #map{
@@ -86,13 +117,17 @@ html,body{
 	width: 50px;
 	position: absolute;
 	top: 80px;
-	left: 21%;
+	left: 380px;
 	z-index: 999;
 }
 
 .gray{
 	background-color: gray;
 	padding: 10px;
+	border-radius: 50px;
+	display: inline-block;
+	width: 150px;
+	text-align: center;
 }
 
     .marker-cluster-small {

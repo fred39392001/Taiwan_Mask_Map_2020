@@ -99,8 +99,8 @@ function addMarker(){
         markers.addLayer(L.marker([lat,lng], {icon: mask}).bindPopup(
             `<p style="text-align:center; font-weight:bold; font-size:1.5em; margin:15px 0;">${pharmacyName}</p>
             <div style="display:flex; justify-content:center;">
-            <span style="color:white; background-color:#73C0D8; border-radius:10px; padding:10px; width:100px; margin-right:5%; text-align:center; font-size:12pt;">成人:${maskAdult}</span>
-            <span style="color:white; background-color:#73C0D8; border-radius:10px; padding:10px;width:100px;text-align:center;font-size:12pt;">兒童:${maskChild}</span>
+            <span style="color:white; background-color:#73C0D8; border-radius:50px; padding:5px; width:100px; margin-right:5%; text-align:center; font-size:12pt;">成人:${maskAdult}</span>
+            <span style="color:white; background-color:#73C0D8; border-radius:50px; padding:5px;width:100px;text-align:center;font-size:12pt;">兒童:${maskChild}</span>
             </div>`
         ));
     }
@@ -117,9 +117,13 @@ function renderList(county){
         const maskChild = data[i].properties.mask_child;
         if(countyName == county){
             str+=`<ul>
+            <div class="maskContent">
             <li>${pharmacyName}</li>
+            <div class="panelMaskNum">
             <span class="gray">成人口罩數量${maskAdult}</span>
             <span>兒童口罩數量${maskChild}</span>
+            </div>
+            </div>
             </ul>`
         }
     }
