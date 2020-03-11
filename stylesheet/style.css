@@ -66,9 +66,12 @@ html,body{
 	height: 100%;
 }
 
-.dateInfo{
+.panelTop{
 	height: 20%;
 	background-color:#73C0D8 ;
+}
+
+.info{
 	display: flex;
 	justify-content: center;
 }

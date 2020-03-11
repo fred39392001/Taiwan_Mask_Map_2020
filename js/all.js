@@ -74,6 +74,7 @@ function getData(){
 }
 
 function init(){
+    renderDate();
     getData();
 }
 
@@ -105,6 +106,64 @@ function addMarker(){
         ));
     }
     map.addLayer(markers);
+}
+
+//在panel印出今天日期
+function renderDate(){
+    const dateInfo = new Date();
+    const day = dateInfo.getDay();
+    const date = dateInfo.getDate();
+    const month = dateInfo.getMonth();
+    const year = dateInfo.getFullYear();
+    const dayChinese = judgeChineseDay(day);
+    let today;
+    if(month == '10' || month == '11' || month == '12'){
+        today = year + '-' + (month+1) + '-' + date;
+        }else{
+        today = year + '-0' + (month+1) + '-' + date;
+        }
+    if(day == 1 || day == 3 || day == 5){
+        document.querySelector('.idNumOdd').style.display = 'block';
+    }else if(day == 2 || day == 4 || day == 6){
+        document.querySelector('.idNumEven').style.display = 'block';
+    }
+    else if(day == 7){
+        document.querySelector('.idNumAll').style.display = 'block';
+    }else{
+        alert('沒有這一天');
+    }
+        document.querySelector('.todayDate').textContent = today;
+        document.querySelector('.infoWeek h2 span').textContent = dayChinese;
+    }
+
+    document.querySelector('.countyList option').textContent='南投縣';
+
+//判斷星期幾並把數字轉成中文字
+function judgeChineseDay(day){
+    switch(day){
+        case 1:
+            return '一';
+            break;
+        case 2:
+            return '二';
+            break;
+        case 3:
+            return '三';
+            break;
+        case 4:
+            return '四';
+            break;
+        case 5:
+            return '五';
+            break;
+        case 6:
+            return '六';
+            break;
+        case 7:
+            return '日';
+            break;
+    }
+
 }
 
 //在左邊欄印出藥局名稱
