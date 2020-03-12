@@ -70,6 +70,7 @@ function getData(){
         data = JSON.parse(xhr.responseText).features;
         addMarker();
         renderList('南投縣');
+        addCountyList();
     }
 }
 
@@ -136,8 +137,6 @@ function renderDate(){
         document.querySelector('.infoWeek h2 span').textContent = dayChinese;
     }
 
-    document.querySelector('.countyList option').textContent='南投縣';
-
 //判斷星期幾並把數字轉成中文字
 function judgeChineseDay(day){
     switch(day){
@@ -164,6 +163,39 @@ function judgeChineseDay(day){
             break;
     }
 
+}
+
+// document.querySelector('.countyList option').textContent='南投縣';
+
+//縣市選單
+const countySelector = document.querySelector('.countyList');
+function addCountyList(){
+    let allCounty = [];
+    let countyStr='';
+    countyStr += '<option>--請選擇縣市--</option>'
+    for(let i=0;i<data.length;i++){
+        const countyName = data[i].properties.county;
+        if(allCounty.indexOf(countyName) == -1 && countyName !== ''){
+        allCounty.push(countyName);
+        countyStr += `<option>${countyName}</option>`
+        }
+    }
+    countySelector.innerHTML = countyStr;
+}
+const townSelector = document.querySelector('.townList');
+function addTownList(){
+    let allTown = [];
+    let townStr='';
+    townStr += '<option>--請選擇鄉鎮市區--</option>'
+    for(let i=0;i<data.length;i++){
+        const countyName = data[i].properties.county;
+        const townName = data[i].properties.town;
+        if(allTown.indexOf(townName) == -1 ){
+        allTown.push(townName);
+        countyStr += `<option>${townName}</option>`
+        }
+    }
+    countySelector.innerHTML = townStr;
 }
 
 //在左邊欄印出藥局名稱
