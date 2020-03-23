@@ -177,26 +177,94 @@ function addCountyList(){
         const countyName = data[i].properties.county;
         if(allCounty.indexOf(countyName) == -1 && countyName !== ''){
         allCounty.push(countyName);
-        countyStr += `<option>${countyName}</option>`
+        countyStr += `<option value="${countyName}">${countyName}</option>`
         }
     }
     countySelector.innerHTML = countyStr;
 }
+countySelector.addEventListener('change', addTownList);
+
 const townSelector = document.querySelector('.townList');
-function addTownList(){
+function addTownList(e){
+    let countyValue = e.target.value;
+    console.log(e);
+    let townStr = `<option value="">-- 請選擇鄉鎮區 --</option>`;
     let allTown = [];
-    let townStr='';
-    townStr += '<option>--請選擇鄉鎮市區--</option>'
-    for(let i=0;i<data.length;i++){
-        const countyName = data[i].properties.county;
-        const townName = data[i].properties.town;
-        if(allTown.indexOf(townName) == -1 ){
-        allTown.push(townName);
-        countyStr += `<option>${townName}</option>`
+    let newTownList = '';
+    for (let i = 0; i < data.length; i++) {
+        // console.log(data[i].properties.county);
+        let countyMatch = data[i].properties.county;
+        // console.log(val, forCounty);
+        if (countyValue == countyMatch) {
+            // ZoneList.push({ district: data[i].properties.town });
+            allTown.push(data[i].properties.town);
+
+        }
+        // console.log(ZoneList);
+    }
+
+    newTownList = new Set(allTown);
+    // console.log(Newzone);
+    newTownList = Array.from(newTownList);
+    // console.log(Newzone);
+
+    // Newzone = ZoneList.filter(function(value, index, arr) {
+    //     return arr.indexOf(value) !== index;
+    // });
+    // console.log(Newzone);
+    for (let i = 0; i < newTownList.length; i++) {
+        townStr += `<option value="${newTownList[i]}">${newTownList[i]}</option>`
+    }
+
+    townSelector.innerHTML = townStr;
+    townSelector.addEventListener('change', getlocationView);
+    townSelector.addEventListener("click", checkForm);
+
+}
+
+function checkForm() {
+    if (countySelector.value == '') {
+        alert('請先選擇縣市');
+    }
+};
+//篩選重複的區>setview=======================
+function getlocationView(e) {
+    let zone = e.target.value;
+    let latlng = [];
+    let county = '';
+
+    // let latlng = [];
+
+    for (let i = 0; i < data.length; i++) {
+        let forTwon = data[i].properties.town;
+        let forcounty = data[i].properties.county;
+        let lat = data[i].geometry.coordinates[0]; //緯度
+        let lng = data[i].geometry.coordinates[1]; //經度
+
+        if (forTwon == zone && forcounty == countySelector.value) {
+            latlng = [lng, lat];
+            // console.log(latlng);
+            county = data[i].properties.county;
+            // console.log(country);
         }
     }
-    countySelector.innerHTML = townStr;
+    map.setView(latlng, 16);
+    renderList(county);
 }
+// function addTownList(){
+//     let allTown = [];
+//     let townStr='';
+//     townStr += '<option>--請選擇鄉鎮市區--</option>'
+//     for(let i=0;i<data.length;i++){
+//         const countyName = data[i].properties.county;
+//         const townName = data[i].properties.town;
+//         if(allTown.indexOf(townName) == -1 ){
+//         allTown.push(townName);
+//         countyStr += `<option>${townName}</option>`
+//         }
+//     }
+//     countySelector.innerHTML = townStr;
+// }
 
 //在左邊欄印出藥局名稱
 function renderList(county){
