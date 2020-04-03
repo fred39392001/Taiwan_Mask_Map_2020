@@ -22,7 +22,7 @@ if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(position => {
     userLat = position.coords.latitude;
     userLng = position.coords.longitude;
-    console.log(userLat, userLng);
+    // console.log(userLat, userLng);
     map.setView([userLat, userLng], 13);
     marker.setLatLng([userLat,userLng]).bindPopup(
         `<h3>你的位置</h3>`)
@@ -50,6 +50,17 @@ const greenIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 });
+
+const orangeIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+
 const redIcon = new L.Icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -69,7 +80,7 @@ function getData(){
     xhr.onload = function(){
         data = JSON.parse(xhr.responseText).features;
         addMarker();
-        renderList('南投縣');
+        renderList('竹山鎮','南投縣');
         addCountyList();
     }
 }
@@ -92,17 +103,36 @@ function addMarker(){
         const maskChild = data[i].properties.mask_child;
         const lat = data[i].geometry.coordinates[1];
         const lng = data[i].geometry.coordinates[0];
-        // console.log(pharmacyName);
         if(maskAdult == 0 || maskChild == 0){
             mask = redIcon;
+        }else if (maskAdult < 100 && maskAdult !== 0 || maskChild < 100 && maskChild !== 0){
+            mask = orangeIcon;
         }else{
             mask = greenIcon;
+        }
+        let maskAdultJudge;
+        let maskChildJudge;
+
+        if (maskAdult >= 100) {
+            maskAdultJudge = 'bg-sufficient';
+        } else if (maskAdult < 100 && maskAdult !== 0) {
+            maskAdultJudge = 'bg-insufficient';
+        } else {
+            maskAdultJudge = 'bg-none';
+        }
+        if (maskChild >= 100) {
+            maskChildJudge = 'bg-sufficient';
+        } else if (maskChild < 100 && maskChild !== 0) {
+            maskChildJudge = 'bg-insufficient';
+
+        } else {
+            maskChildJudge = 'bg-none';
         }
         markers.addLayer(L.marker([lat,lng], {icon: mask}).bindPopup(
             `<p style="text-align:center; font-weight:bold; font-size:1.5em; margin:15px 0;">${pharmacyName}</p>
             <div style="display:flex; justify-content:center;">
-            <span style="color:white; background-color:#73C0D8; border-radius:50px; padding:5px; width:100px; margin-right:5%; text-align:center; font-size:12pt;">成人:${maskAdult}</span>
-            <span style="color:white; background-color:#73C0D8; border-radius:50px; padding:5px;width:100px;text-align:center;font-size:12pt;">兒童:${maskChild}</span>
+            <span class="${maskAdultJudge}">成人:${maskAdult}</span>
+            <span class="${maskChildJudge}">兒童:${maskChild}</span>
             </div>`
         ));
     }
@@ -165,7 +195,6 @@ function judgeChineseDay(day){
 
 }
 
-// document.querySelector('.countyList option').textContent='南投縣';
 
 //縣市選單
 const countySelector = document.querySelector('.countyList');
@@ -185,102 +214,86 @@ function addCountyList(){
 countySelector.addEventListener('change', addTownList);
 
 const townSelector = document.querySelector('.townList');
+townSelector.innerHTML = `<option value="" style="text-align: center;">-- 請選擇鄉鎮區 --</option>`;
+
 function addTownList(e){
     let countyValue = e.target.value;
-    console.log(e);
-    let townStr = `<option value="">-- 請選擇鄉鎮區 --</option>`;
+    let townStr = `<option value="" style="text-align: center;">-- 請選擇鄉鎮區 --</option>`;
     let allTown = [];
     let newTownList = '';
     for (let i = 0; i < data.length; i++) {
-        // console.log(data[i].properties.county);
         let countyMatch = data[i].properties.county;
-        // console.log(val, forCounty);
         if (countyValue == countyMatch) {
-            // ZoneList.push({ district: data[i].properties.town });
             allTown.push(data[i].properties.town);
-
         }
-        // console.log(ZoneList);
     }
 
     newTownList = new Set(allTown);
-    // console.log(Newzone);
     newTownList = Array.from(newTownList);
-    // console.log(Newzone);
-
-    // Newzone = ZoneList.filter(function(value, index, arr) {
-    //     return arr.indexOf(value) !== index;
-    // });
-    // console.log(Newzone);
     for (let i = 0; i < newTownList.length; i++) {
-        townStr += `<option value="${newTownList[i]}">${newTownList[i]}</option>`
+        townStr += `<option value="${newTownList[i]}" style="text-align: center;">${newTownList[i]}</option>`
     }
 
     townSelector.innerHTML = townStr;
-    townSelector.addEventListener('change', getlocationView);
-    townSelector.addEventListener("click", checkForm);
+    townSelector.addEventListener('change', geoTownView);
 
 }
 
-function checkForm() {
-    if (countySelector.value == '') {
-        alert('請先選擇縣市');
-    }
-};
-//篩選重複的區>setview=======================
-function getlocationView(e) {
-    let zone = e.target.value;
-    let latlng = [];
+//選好鄉鎮後，定位至該鄉鎮
+function geoTownView(e) {
+    let town = e.target.value;
+    let townLatLng = [];
     let county = '';
 
-    // let latlng = [];
-
     for (let i = 0; i < data.length; i++) {
-        let forTwon = data[i].properties.town;
-        let forcounty = data[i].properties.county;
-        let lat = data[i].geometry.coordinates[0]; //緯度
-        let lng = data[i].geometry.coordinates[1]; //經度
+        let townTarget = data[i].properties.town;
+        let countyTarget = data[i].properties.county;
+        let lat = data[i].geometry.coordinates[0];
+        let lng = data[i].geometry.coordinates[1];
 
-        if (forTwon == zone && forcounty == countySelector.value) {
-            latlng = [lng, lat];
-            // console.log(latlng);
+        if (townTarget == town && countyTarget == countySelector.value) {
+            townLatLng = [lng, lat];
             county = data[i].properties.county;
-            // console.log(country);
         }
     }
-    map.setView(latlng, 16);
-    renderList(county);
+    map.setView(townLatLng, 13);
+    renderList(town,county);
 }
-// function addTownList(){
-//     let allTown = [];
-//     let townStr='';
-//     townStr += '<option>--請選擇鄉鎮市區--</option>'
-//     for(let i=0;i<data.length;i++){
-//         const countyName = data[i].properties.county;
-//         const townName = data[i].properties.town;
-//         if(allTown.indexOf(townName) == -1 ){
-//         allTown.push(townName);
-//         countyStr += `<option>${townName}</option>`
-//         }
-//     }
-//     countySelector.innerHTML = townStr;
-// }
 
 //在左邊欄印出藥局名稱
-function renderList(county){
+function renderList(town,county){
     let str = '';
     for(let i = 0;i<data.length;i++){
         const countyName = data[i].properties.county;
+        const townName = data[i].properties.town;
         const pharmacyName = data[i].properties.name;
         const maskAdult = data[i].properties.mask_adult;
         const maskChild = data[i].properties.mask_child;
-        if(countyName == county){
+        let maskAdultJudge;
+        let maskChildJudge;
+
+        if (maskAdult >= 100) {
+            maskAdultJudge = 'bg-sufficient';
+        } else if (maskAdult < 100 && maskAdult !== 0) {
+            maskAdultJudge = 'bg-insufficient';
+        } else {
+            maskAdultJudge = 'bg-none';
+        }
+        if (maskChild >= 100) {
+            maskChildJudge = 'bg-sufficient';
+        } else if (maskChild < 100 && maskChild !== 0) {
+            maskChildJudge = 'bg-insufficient';
+
+        } else {
+            maskChildJudge = 'bg-none';
+        }
+        if(countyName == county && townName == town){
             str+=`<ul>
             <div class="maskContent">
             <li>${pharmacyName}</li>
             <div class="panelMaskNum">
-            <span class="gray">成人口罩數量${maskAdult}</span>
-            <span>兒童口罩數量${maskChild}</span>
+            <span class="${maskAdultJudge}">成人口罩數量${maskAdult}</span>
+            <span class="${maskChildJudge}">兒童口罩數量${maskChild}</span>
             </div>
             </div>
             </ul>`

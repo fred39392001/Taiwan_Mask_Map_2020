@@ -94,6 +94,10 @@ html,body{
 	font-size: 13pt;
 	font-weight: 900;
 }
+
+.countyList option{
+	text-align: center;
+}
 .pharmacyList{
 	height: 75%;
 	overflow:auto;
@@ -124,13 +128,37 @@ html,body{
 	z-index: 999;
 }
 
-.gray{
-	background-color: gray;
+.bg-sufficient{
+	color:white;
+	background-color: #73C0D8;
 	padding: 10px;
 	border-radius: 50px;
 	display: inline-block;
 	width: 150px;
 	text-align: center;
+	margin:0 2px;
+}
+
+.bg-insufficient{
+	color:white;
+	background-color: #FFA573;
+	padding: 10px;
+	border-radius: 50px;
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	margin:0 2px;
+}
+
+.bg-none{
+	color:white;
+	background-color: #A5A5A5;
+	padding: 10px;
+	border-radius: 50px;
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	margin:0 2px;
 }
 
     .marker-cluster-small {
