@@ -61,6 +61,7 @@ html,body{
 	flex-direction:row-reverse;
 }
 
+
 .panel{
 	width: 25%;
 	height: 100%;
@@ -68,7 +69,7 @@ html,body{
 
 .panelTop{
 	height: 20%;
-	background-color:#73C0D8 ;
+	background-color:#63cf9c ;
 }
 
 .info{
@@ -128,37 +129,44 @@ html,body{
 	z-index: 999;
 }
 
+.pop-style{
+	font-size: 1.3em;
+}
+
 .bg-sufficient{
 	color:white;
-	background-color: #73C0D8;
+	background-color: #63cf9c;
 	padding: 10px;
 	border-radius: 50px;
 	display: inline-block;
 	width: 150px;
 	text-align: center;
 	margin:0 2px;
+	text-shadow: 1px 1px 4px rgba(0, 0, 0,0.6);
 }
 
 .bg-insufficient{
 	color:white;
-	background-color: #FFA573;
+	background-color: #FAB3A9;
 	padding: 10px;
 	border-radius: 50px;
 	display: inline-block;
 	width: 150px;
 	text-align: center;
 	margin:0 2px;
+	text-shadow: 1px 1px 4px rgba(0, 0, 0,0.6);
 }
 
 .bg-none{
 	color:white;
-	background-color: #A5A5A5;
+	background-color: #B4BDC1;
 	padding: 10px;
 	border-radius: 50px;
 	display: inline-block;
 	width: 150px;
 	text-align: center;
 	margin:0 2px;
+	text-shadow: 1px 1px 4px rgba(0, 0, 0,0.6);
 }
 
     .marker-cluster-small {

@@ -131,8 +131,8 @@ function addMarker(){
         markers.addLayer(L.marker([lat,lng], {icon: mask}).bindPopup(
             `<p style="text-align:center; font-weight:bold; font-size:1.5em; margin:15px 0;">${pharmacyName}</p>
             <div style="display:flex; justify-content:center;">
-            <span class="${maskAdultJudge}">成人:${maskAdult}</span>
-            <span class="${maskChildJudge}">兒童:${maskChild}</span>
+            <span class="${maskAdultJudge} pop-style">成人:${maskAdult}</span>
+            <span class="${maskChildJudge} pop-style">兒童:${maskChild}</span>
             </div>`
         ));
     }
