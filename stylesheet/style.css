@@ -100,7 +100,7 @@ html,body{
 	text-align: center;
 }
 .pharmacyList{
-	height: 75%;
+	height: 80%;
 	overflow:auto;
 }
 
@@ -110,10 +110,15 @@ html,body{
 	justify-content: center;
 }
 
+.maskContent:hover{
+	background:#dfdfdf;
+	cursor: pointer;
+}
 
 .panelMaskNum{
 	padding: 20px 0 10px 0; 
 }
+
 
 #map{
     width: 80%;

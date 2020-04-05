@@ -158,7 +158,7 @@ function renderDate(){
     }else if(day == 2 || day == 4 || day == 6){
         document.querySelector('.idNumEven').style.display = 'block';
     }
-    else if(day == 7){
+    else if(day == 0){
         document.querySelector('.idNumAll').style.display = 'block';
     }else{
         alert('沒有這一天');
@@ -188,7 +188,7 @@ function judgeChineseDay(day){
         case 6:
             return '六';
             break;
-        case 7:
+        case 0:
             return '日';
             break;
     }
@@ -288,8 +288,8 @@ function renderList(town,county){
             maskChildJudge = 'bg-none';
         }
         if(countyName == county && townName == town){
-            str+=`<ul>
-            <div class="maskContent">
+            str+=`<ul class="maskContent">
+            <div class="pharmacyTitle" data-lat="${data[i].geometry.coordinates[1]}" data-lng="${data[i].geometry.coordinates[0]}">
             <li>${pharmacyName}</li>
             <div class="panelMaskNum">
             <span class="${maskAdultJudge}">成人口罩數量${maskAdult}</span>
@@ -300,4 +300,36 @@ function renderList(town,county){
         }
     }
         document.querySelector('.pharmacyList').innerHTML = str;
+        var pharmacyTitle = document.querySelectorAll('.pharmacyTitle'); 
+        var pharmacyNameList = document.querySelectorAll('.maskContent'); 
+        clickPharmacyGeo(pharmacyTitle, pharmacyNameList);
+}
+
+function clickPharmacyGeo(pharmacyTitle, pharmacyNameList){
+    for(let i=0;i<pharmacyNameList.length;i++){
+        pharmacyTitle[i].addEventListener('click',function(e){
+            Lat = Number(e.currentTarget.dataset.lat);
+            Lng = Number(e.currentTarget.dataset.lng);
+            map.setView([Lat, Lng], 20);
+            markerOpen(Lat, Lng);
+    })
+}
+}
+
+const markerOpen = (lat, lng) => {
+    // 搜尋 markers 圖層下的子圖層
+    markers.eachLayer(layer => {
+        // 抓取圖層的 經緯度
+        const eachLat = layer._latlng.lat;
+        const eachLng = layer._latlng.lng;
+        // 如果與參數的經緯度相同，就抓取那個 layer
+        if (eachLat === lat && eachLng === lng) {
+            // zoomToShowLayer 這個是 MarkerClusterGroup 給的函式
+            // 方法是調用 MarkerClusterGroup 下的子圖層
+            markers.zoomToShowLayer(layer, () =>
+                // 打開 bindPopup 的 HTML
+                layer.openPopup()
+            );
+        }
+    });
 }
