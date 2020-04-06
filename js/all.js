@@ -311,25 +311,6 @@ function clickPharmacyGeo(pharmacyTitle, pharmacyNameList){
             Lat = Number(e.currentTarget.dataset.lat);
             Lng = Number(e.currentTarget.dataset.lng);
             map.setView([Lat, Lng], 20);
-            markerOpen(Lat, Lng);
     })
 }
-}
-
-const markerOpen = (lat, lng) => {
-    // 搜尋 markers 圖層下的子圖層
-    markers.eachLayer(layer => {
-        // 抓取圖層的 經緯度
-        const eachLat = layer._latlng.lat;
-        const eachLng = layer._latlng.lng;
-        // 如果與參數的經緯度相同，就抓取那個 layer
-        if (eachLat === lat && eachLng === lng) {
-            // zoomToShowLayer 這個是 MarkerClusterGroup 給的函式
-            // 方法是調用 MarkerClusterGroup 下的子圖層
-            markers.zoomToShowLayer(layer, () =>
-                // 打開 bindPopup 的 HTML
-                layer.openPopup()
-            );
-        }
-    });
 }
