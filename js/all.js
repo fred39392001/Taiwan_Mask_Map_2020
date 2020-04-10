@@ -1,5 +1,5 @@
 //載入地圖
-const map = L.map('map').setView([0, 0], 16);
+const map = L.map('map', { zoomControl: false }).setView([0, 0], 16);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -79,6 +79,7 @@ function getData(){
     xhr.send(null);
     xhr.onload = function(){
         data = JSON.parse(xhr.responseText).features;
+        L.control.zoom({ position: 'topright' }).addTo(map);
         addMarker();
         renderList('竹山鎮','南投縣');
         addCountyList();
@@ -93,7 +94,7 @@ function init(){
 init();
 
 //將marker群組套件載入
-const markers = new L.MarkerClusterGroup().addTo(map);
+const markers = new L.MarkerClusterGroup({ disableClusteringAtZoom: 18 }).addTo(map);
 
 //倒入全國藥局資料並標上marker
 function addMarker(){
@@ -290,8 +291,8 @@ function renderList(town,county){
         if(countyName == county && townName == town){
             str+=`<ul class="maskContent">
             <div class="pharmacyTitle" data-lat="${data[i].geometry.coordinates[1]}" data-lng="${data[i].geometry.coordinates[0]}">
-            <li>${pharmacyName}</li>
-            <div class="panelMaskNum">
+            <li data-name="${pharmacyName}">${pharmacyName}</li>
+            <div class="panelMaskNum" data-name="${pharmacyName}">
             <span class="${maskAdultJudge}">成人口罩數量${maskAdult}</span>
             <span class="${maskChildJudge}">兒童口罩數量${maskChild}</span>
             </div>
@@ -311,6 +312,12 @@ function clickPharmacyGeo(pharmacyTitle, pharmacyNameList){
             Lat = Number(e.currentTarget.dataset.lat);
             Lng = Number(e.currentTarget.dataset.lng);
             map.setView([Lat, Lng], 20);
+            markers.eachLayer(function (layer) {
+                const layerLatLng = layer.getLatLng();
+                if (layerLatLng.lat == Lat && layerLatLng.lng == Lng) {
+                  layer.openPopup();
+                }
+              });
     })
 }
 }

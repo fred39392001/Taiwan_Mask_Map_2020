@@ -128,9 +128,9 @@ html,body{
 
 .GeoBtn{
 	width: 50px;
-	position: absolute;
+	position: fixed;
 	top: 80px;
-	left: 380px;
+	right: 5px;
 	z-index: 999;
 }
 
@@ -211,4 +211,8 @@ html,body{
 		}
 	.marker-cluster span {
 		line-height: 30px;
+		}
+
+	.container.leaflet-right {
+		right:0px;
 		}
