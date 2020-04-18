@@ -36,6 +36,9 @@ if ('geolocation' in navigator) {
 let geoBtn = document.getElementById('jsGeoBtn');
 geoBtn.addEventListener('click',function(){
     map.setView([userLat, userLng], 13);
+    marker.setLatLng([userLat,userLng]).bindPopup(
+        `<h3>你的位置</h3>`)
+        .openPopup();
 },false);
 
 
@@ -168,6 +171,15 @@ function renderDate(){
         document.querySelector('.infoWeek h2 span').textContent = dayChinese;
     }
 
+// 收合選單
+const toggle_btn = document.querySelector('.js_toggle');
+const panel = document.querySelector('.panel');
+toggle_btn.onclick = function(e) {
+    // e.preventDefault();
+    panel.classList.toggle("panelClose");
+
+};
+
 //判斷星期幾並把數字轉成中文字
 function judgeChineseDay(day){
     switch(day){
@@ -257,7 +269,7 @@ function geoTownView(e) {
             county = data[i].properties.county;
         }
     }
-    map.setView(townLatLng, 13);
+    map.setView(townLatLng, 17);
     renderList(town,county);
 }
 

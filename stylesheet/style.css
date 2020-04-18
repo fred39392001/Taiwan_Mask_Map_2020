@@ -63,13 +63,61 @@ html,body{
 
 
 .panel{
-	width: 25%;
+	width: 30%;
 	height: 100%;
+	position:absolute;
+	top: 0;
+	left:0;
+	z-index: 99999;
+	background-color:white;
+	transition: all 0.5s;
+	box-shadow: 2px 0px 3px 1px rgba(0, 0, 0, 0.25);
 }
+
+.panelClose{
+	margin-left:-30%;
+}
+
+@media(max-width:768px){
+	.panel{
+		width:50%;
+	}
+	.panelClose{
+		margin-left:-50%;
+	}
+}
+
+@media(max-width:568px){
+	.panel{
+		width:80%;
+	}
+	.panelClose{
+		margin-left:-80%;
+	}
+}
+
 
 .panelTop{
 	height: 20%;
 	background-color:#63cf9c ;
+	position: relative;
+}
+
+.toggleBtn{
+	/* width: 20px;
+	height:20px; */
+	background-color:#63cf9c ;
+	position:absolute;
+	top:25%;
+	left:99%;
+	border-radius: 0 5px 5px 0;
+	cursor:pointer;
+	box-shadow: 4px 2px 3px 0px rgba(0, 0, 0, 0.25);
+}
+
+.toggleBtn svg{
+	height:20px;
+	padding:25px 7px;
 }
 
 .info{
@@ -121,10 +169,10 @@ html,body{
 
 
 #map{
-    width: 80%;
+    width: 100%;
 	height: 100%;
-	position: relative;
 }
+
 
 .GeoBtn{
 	width: 50px;
