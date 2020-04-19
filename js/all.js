@@ -147,28 +147,53 @@ function addMarker(){
 function renderDate(){
     const dateInfo = new Date();
     const day = dateInfo.getDay();
-    const date = dateInfo.getDate();
-    const month = dateInfo.getMonth();
-    const year = dateInfo.getFullYear();
+    let date = dateInfo.getDate();
+    let month = dateInfo.getMonth()+1;
+    let year = dateInfo.getFullYear();
     const dayChinese = judgeChineseDay(day);
+    const twoWeeks = 1000 * 60 * 60 * 24 * 14;
+    const twoWeeksDate = new Date(new Date().getTime() + twoWeeks);
+    let nextBuyTimeDate = twoWeeksDate.getDate();
+    let nextBuyTimeMonth = twoWeeksDate.getMonth() + 1;
+    let nextBuyTimeYear = twoWeeksDate.getFullYear();
     let today;
-    if(month == '10' || month == '11' || month == '12'){
-        today = year + '-' + (month+1) + '-' + date;
-        }else{
-        today = year + '-0' + (month+1) + '-' + date;
+    let nextBuyDate;
+    if(month.toString().length == 1){
+        month = '0' + month;
         }
+    if(date.toString().length == 1){
+        date = '0' + date;
+        }
+    today = year + '-' + month + '-' + date;
+
+    if (nextBuyTimeMonth.toString().length == 1) {
+        nextBuyTimeMonth = '0' + nextBuyTimeMonth;
+    }
+    if (nextBuyTimeDate.toString().length == 1) {
+        nextBuyTimeDate = '0' + nextBuyTimeDate;
+    }
+    nextBuyDate = nextBuyTimeYear + '-' + nextBuyTimeMonth + '-' + nextBuyTimeDate;
+    // if(nextBuyTimeMonth == '10' || nextBuyTimeMonth == '11' || nextBuyTimeMonth == '12'){
+    //     nextBuyDate = nextBuyTimeYear + '-' + (nextBuyTimeMonth+1) + '-' + nextBuyTimeDate;
+    //     }else{
+    //     nextBuyDate = nextBuyTimeYear + '-0' + (nextBuyTimeMonth+1) + '-' + nextBuyTimeDate;
+    // }
     if(day == 1 || day == 3 || day == 5){
-        document.querySelector('.idNumOdd').style.display = 'block';
+        // document.querySelector('.idNumOdd').style.display = 'block';
+        document.querySelector('.idNumAll').style.display = 'block';
     }else if(day == 2 || day == 4 || day == 6){
-        document.querySelector('.idNumEven').style.display = 'block';
+        // document.querySelector('.idNumEven').style.display = 'block';
+        document.querySelector('.idNumAll').style.display = 'block';
     }
     else if(day == 0){
         document.querySelector('.idNumAll').style.display = 'block';
     }else{
         alert('沒有這一天');
     }
-        document.querySelector('.todayDate').textContent = today;
+        document.querySelector('.todayDate h2 span').textContent = today;
         document.querySelector('.infoWeek h2 span').textContent = dayChinese;
+        document.querySelector('.nextBuyDate span').textContent = nextBuyDate;
+        document.querySelector('.nextBuyDay').textContent = dayChinese;
     }
 
 // 收合選單

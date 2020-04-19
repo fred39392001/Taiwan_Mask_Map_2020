@@ -48,10 +48,10 @@ table {
 }
 
 /* 自定義css */
-
 html,body{
     width: 100%;
 	height: 100%;
+	font-family: "微軟正黑體", "Microsoft JhengHei", "Segoe UI Semibold", "Segoe UI", "Lucida Grande";
 }
 
 .container{
@@ -98,14 +98,12 @@ html,body{
 
 
 .panelTop{
-	height: 20%;
+	height: 40%;
 	background-color:#63cf9c ;
 	position: relative;
 }
 
 .toggleBtn{
-	/* width: 20px;
-	height:20px; */
 	background-color:#63cf9c ;
 	position:absolute;
 	top:25%;
@@ -115,40 +113,110 @@ html,body{
 	box-shadow: 4px 2px 3px 0px rgba(0, 0, 0, 0.25);
 }
 
+.taiwanMaskMapLogo{
+	width: 95%;
+	margin: 0 auto;
+	padding-bottom:10px;
+}
+
 .toggleBtn svg{
 	height:20px;
-	padding:25px 7px;
+	padding:25px 17px;
 }
 
 .info{
 	display: flex;
 	justify-content: center;
+	padding-bottom:7px;
 }
 
+.infoWeek h2{
+	font-size: 24px;
+	font-weight: 500;
+	color:#072e00;
+}
+
+.todayDate{
+	font-size: 24px;
+	font-weight: 600;
+	color:#072e00;
+}
+
+.idBuyText{
+	display:flex;
+	justify-content: center;
+	padding-bottom:7px;
+}
+
+
 .idNumOdd, .idNumEven, .idNumAll{
-	color: white;
-	font-size: 8pt;
 	text-align: justify;
 	display: none;
 }
 
-.idNumOdd span, .idNumEven span{
-	color: #FFF126;
-	font-size: 16pt;
-	font-weight: 900;
+.idNumAll{
+	color:white;
+	font-size: 20px;
+	letter-spacing:1.2px;
+	font-weight: lighter;
 }
 
 .idNumAll span{
+	font-weight: 700;
+}
+
+.nextBuyDateText{
+	display:flex;
+	justify-content: center;
+}
+
+.nextBuyDate{
+	font-size:13px;
+	padding-bottom:15px;
+	color:#072e00;
+}
+
+.nextBuyDateNum{
+	color:yellow;
+	font-weight: bolder;
+}
+
+
+@media(max-width:320px){
+	.todayDate{
+		font-size:18px;
+	}
+	.infoWeek h2{
+		font-size:18px;
+	}
+	.idNumAll{
+		font-size: 16px;
+		letter-spacing:0.5px;
+	}
+	.nextBuyDate{
+		font-size: 1.1em;
+		padding-left:15px;
+		line-height: 1.3em;
+		letter-spacing: 0.5px;
+	}
+}
+/* .idNumOdd span, .idNumEven span{
+	color: #FFF126;
+	font-size: 16pt;
+	font-weight: 900;
+} */
+
+/* .idNumAll span{
 	color: #FFF126;
 	font-size: 13pt;
 	font-weight: 900;
-}
+} */
 
 .countyList option{
 	text-align: center;
 }
 .pharmacyList{
-	height: 80%;
+	height: 60%;
 	overflow:auto;
 }
 
