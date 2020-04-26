@@ -239,7 +239,7 @@ const countySelector = document.querySelector('.countyList');
 function addCountyList(){
     let allCounty = [];
     let countyStr='';
-    countyStr += '<option>--請選擇縣市--</option>'
+    countyStr += '<option>請選擇縣市</option>'
     for(let i=0;i<data.length;i++){
         const countyName = data[i].properties.county;
         if(allCounty.indexOf(countyName) == -1 && countyName !== ''){
@@ -252,11 +252,11 @@ function addCountyList(){
 countySelector.addEventListener('change', addTownList);
 
 const townSelector = document.querySelector('.townList');
-townSelector.innerHTML = `<option value="" style="text-align: center;">-- 請選擇鄉鎮區 --</option>`;
+townSelector.innerHTML = `<option value="">請選擇鄉鎮區</option>`;
 
 function addTownList(e){
     let countyValue = e.target.value;
-    let townStr = `<option value="" style="text-align: center;">-- 請選擇鄉鎮區 --</option>`;
+    let townStr = `<option value="">請選擇鄉鎮區</option>`;
     let allTown = [];
     let newTownList = '';
     for (let i = 0; i < data.length; i++) {
@@ -269,7 +269,7 @@ function addTownList(e){
     newTownList = new Set(allTown);
     newTownList = Array.from(newTownList);
     for (let i = 0; i < newTownList.length; i++) {
-        townStr += `<option value="${newTownList[i]}" style="text-align: center;">${newTownList[i]}</option>`
+        townStr += `<option value="${newTownList[i]}">${newTownList[i]}</option>`
     }
 
     townSelector.innerHTML = townStr;
