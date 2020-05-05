@@ -293,8 +293,7 @@ html,body{
 }
 
 .pharmacyTitle{
-	padding-left:10px;
-	padding-right:10px;
+width:90%;
 }
 .pharmacyList li{
 	font-size: 22px;
@@ -335,6 +334,8 @@ html,body{
 .panelMaskNum{
 	padding: 20px 0 10px 0; 
 	font-size: 20px;
+	display:flex;
+	justify-content: center;
 }
 
 .infoLayout{

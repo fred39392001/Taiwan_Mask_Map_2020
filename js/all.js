@@ -339,13 +339,13 @@ function renderList(town,county){
             <div class="${maskAdultJudge}">
             <div class="infoLayout">
             <img class="adultIcon" src="img/adultIcon.svg" alt="">
-            <p>: ${maskAdult}</p>
+            <p>${maskAdult}</p>
             </div>
             </div>
-            <div class="${maskChildJudge}">
+            &nbsp;<div class="${maskChildJudge}">
             <div class="infoLayout">
             <img class="kidIcon" src="img/kidIcon.svg" alt="">
-            <p>: ${maskChild}</p>
+            <p>${maskChild}</p>
             </div>
             </div>
             </div>
