@@ -307,6 +307,9 @@ function renderList(town,county){
         const pharmacyName = data[i].properties.name;
         const maskAdult = data[i].properties.mask_adult;
         const maskChild = data[i].properties.mask_child;
+        const pharmacyAddress = data[i].properties.address;
+        const pharmacyPhone = data[i].properties.phone;
+        const pharmacyNote = data[i].properties.note;
         let maskAdultJudge;
         let maskChildJudge;
 
@@ -328,10 +331,23 @@ function renderList(town,county){
         if(countyName == county && townName == town){
             str+=`<ul class="maskContent">
             <div class="pharmacyTitle" data-lat="${data[i].geometry.coordinates[1]}" data-lng="${data[i].geometry.coordinates[0]}">
-            <li data-name="${pharmacyName}">${pharmacyName}</li>
+            <li data-name="${pharmacyName}"><span>${pharmacyName}</span></li>
+            <p class="infoText"><i class="fas fa-map-marker-alt"></i> ${pharmacyAddress}</p>
+            <p class="infoText"><i class="fas fa-phone-square-alt"></i> ${pharmacyPhone}</p>
+            <p class="noteText"> ${pharmacyNote}</p>
             <div class="panelMaskNum" data-name="${pharmacyName}">
-            <span class="${maskAdultJudge}">成人口罩數量${maskAdult}</span>
-            <span class="${maskChildJudge}">兒童口罩數量${maskChild}</span>
+            <div class="${maskAdultJudge}">
+            <div class="infoLayout">
+            <img class="adultIcon" src="img/adultIcon.svg" alt="">
+            <p>: ${maskAdult}</p>
+            </div>
+            </div>
+            <div class="${maskChildJudge}">
+            <div class="infoLayout">
+            <img class="kidIcon" src="img/kidIcon.svg" alt="">
+            <p>: ${maskChild}</p>
+            </div>
+            </div>
             </div>
             </div>
             </ul>`

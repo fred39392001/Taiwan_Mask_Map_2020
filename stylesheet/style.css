@@ -292,10 +292,39 @@ html,body{
 	overflow:auto;
 }
 
+.pharmacyTitle{
+	padding-left:10px;
+	padding-right:10px;
+}
+.pharmacyList li{
+	font-size: 22px;
+	font-weight: 900;
+	color:#072e00;
+	border-left:solid 3.5px #072e00;
+}
+
+.pharmacyList li span{
+	padding-left: 8px;
+}
+
 .pharmacyList ul{
-	padding:10px 0 8px 0;
+	padding:20px 0 20px 0;
 	display: flex;
 	justify-content: center;
+	border-bottom: solid 0.5px #072e00;
+}
+
+.infoText{
+	color: #072e00;
+	padding-top: 15px;
+	
+}
+
+.noteText{
+	color: black;
+	padding-top: 12px;
+	font-size: 12px;
+	word-break: normal;
 }
 
 .maskContent:hover{
@@ -305,8 +334,19 @@ html,body{
 
 .panelMaskNum{
 	padding: 20px 0 10px 0; 
+	font-size: 20px;
 }
 
+.infoLayout{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.adultIcon,.kidIcon{
+	width:35px;
+	padding-right:3px;
+}
 
 #map{
     width: 100%;
@@ -332,9 +372,9 @@ html,body{
 	padding: 10px;
 	border-radius: 50px;
 	display: inline-block;
-	width: 150px;
+	width: 130px;
 	text-align: center;
-	margin:0 2px;
+	margin:0 2px 5px 0;
 	text-shadow: 1px 1px 4px rgba(0, 0, 0,0.6);
 }
 
@@ -344,9 +384,9 @@ html,body{
 	padding: 10px;
 	border-radius: 50px;
 	display: inline-block;
-	width: 150px;
+	width: 130px;
 	text-align: center;
-	margin:0 2px;
+	margin:0 2px 5px 0;
 	text-shadow: 1px 1px 4px rgba(0, 0, 0,0.6);
 }
 
@@ -356,9 +396,9 @@ html,body{
 	padding: 10px;
 	border-radius: 50px;
 	display: inline-block;
-	width: 150px;
+	width: 130px;
 	text-align: center;
-	margin:0 2px;
+	margin:0 2px 5px 0;
 	text-shadow: 1px 1px 4px rgba(0, 0, 0,0.6);
 }
 
