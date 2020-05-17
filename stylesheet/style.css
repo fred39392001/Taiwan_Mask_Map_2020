@@ -291,13 +291,13 @@ html,body{
 	text-align: center;
 }
 .pharmacyList{
-	height: 51%;
+	height: 50%;
 	overflow:auto;
 }
 
 @media(min-width:319px) and (max-width:395px){
 	.pharmacyList{
-		height: 46%;
+		height: 45%;
 	}
 }
 
