@@ -2,7 +2,7 @@
 const map = L.map('map', { zoomControl: false }).setView([0, 0], 16);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> Contributors:<a href="https://github.com/fred39392001">ABow_Chen</a>'
 }).addTo(map);
 
 const violetIcon = new L.Icon({
@@ -22,7 +22,7 @@ if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(position => {
     userLat = position.coords.latitude;
     userLng = position.coords.longitude;
-    // console.log(userLat, userLng);
+    console.log(userLat, userLng);
     map.setView([userLat, userLng], 13);
     marker.setLatLng([userLat,userLng]).bindPopup(
         `<h3>你的位置</h3>`)
@@ -81,6 +81,7 @@ function getData(){
     xhr.open('get','https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json',true)
     xhr.send(null);
     xhr.onload = function(){
+        document.querySelector('.loader').style.display = 'none';
         data = JSON.parse(xhr.responseText).features;
         L.control.zoom({ position: 'topright' }).addTo(map);
         addMarker();
@@ -143,6 +144,7 @@ function addMarker(){
             // </div>`
             `<div class="popupInfo">
             <p class="popupTitle" data-name="${pharmacyName}"><span>${pharmacyName}</span></p>
+            <hr>
             <p class="popupText"><i class="fas fa-map-marker-alt"></i> ${pharmacyAddress}</p>
             <p class="popupText"><i class="fas fa-phone-square-alt"></i> ${pharmacyPhone}</p>
             <p class="popupNote"> ${pharmacyNote}</p>

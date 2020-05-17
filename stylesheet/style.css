@@ -61,7 +61,12 @@ html,body{
 	flex-direction:row-reverse;
 }
 
-
+.loader{
+	position:absolute;
+	left:50%;
+	top:50vh;
+	z-index:900;
+}
 .panel{
 	width: 25%;
 	height: 100%;
@@ -288,6 +293,7 @@ html,body{
 .pharmacyList{
 	height: 50%;
 	overflow:auto;
+	min-height:0%;
 }
 
 @media(min-width:319px) and (max-width:395px){
@@ -362,18 +368,32 @@ align-items: center;
 	justify-content: center;
 	align-items: center;
 	}
+.popupInfo hr{
+	border:0.5px solid #072e00;
+}
 
 .popupTitle{
-	font-size: 18px;
+	font-size: 20px;
 	font-weight: 900;
 	color:#072e00;
-	border-left:solid 3px #072e00;
 }
 
 .popupTitle span{
 	padding-left: 5px;
 }
-	
+
+.popupText{
+	color: #072e00;
+	padding-top: 5px;
+	font-size: 15px;
+}
+
+.popupNote{
+	padding-top: 5px;
+	font-size: 10px;
+	color: rgb(125, 125, 125);
+}
+
 .adultIconS,.kidIconS{
 	width:35px;
 	padding-right:3px;
