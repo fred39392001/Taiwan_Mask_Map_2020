@@ -137,11 +137,6 @@ function addMarker(){
             maskChildJudge = 'bg-none';
         }
         markers.addLayer(L.marker([lat,lng], {icon: mask}).bindPopup(
-            // `<p style="text-align:center; font-weight:bold; font-size:1.5em; margin:15px 0;">${pharmacyName}</p>
-            // <div class="popupBtn">
-            // <span class="${maskAdultJudge} pop-style">成人:${maskAdult}</span>
-            // &nbsp;<span class="${maskChildJudge} pop-style">兒童:${maskChild}</span>
-            // </div>`
             `<div class="popupInfo">
             <p class="popupTitle" data-name="${pharmacyName}"><span>${pharmacyName}</span></p>
             <hr>
